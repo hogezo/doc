@@ -123,17 +123,20 @@ function dumpSwitch(tCol, eRow){
     if(cell != undefined){
       if(cell.v == "1"){
         let compString = worksheet[utils.encode_cell({c:1, r:r})];
+        let commentString = worksheet[utils.encode_cell({c:2, r:r})];
 //        console.log(compString.v);
 //        console.log(worksheet[utils.encode_cell({c:tCol, r:r})]);
         var isEnable = worksheet[utils.encode_cell({c:tCol, r:r})];
         if(isEnable != undefined){
           if("○" == isEnable.v){
 //            console.log("#define "+compString.v+" "+"1");
+            writeOutbuf("/*" + commentString.v + "*/");
             writeOutbuf("  #define "+compString.v+" "+"1");
           }
           else{
 //            console.log("//"+compString.v);
-            writeOutbuf("  #define "+compString.v+" "+"0");
+            writeOutbuf("/*" + commentString.v + "*/");
+            writeOutbuf("  #define "+compString.v+" "+"(0)");
           }
         }
       }
@@ -156,7 +159,7 @@ function writeOutbuf(outString){
 
 function showOutputResult(){
 //  document.getElementById('list').innerHTML = '<ul>' + outputBuf.join('') + '</ul>';
-  document.getElementById('list').innerHTML = '<h3>' + outputBuf.join('') + '</h3>';
+  document.getElementById('list').innerHTML = '<h5>' + outputBuf.join('') + '</h5>';
 }
 
 function readCell(workSheet, cellRange){
