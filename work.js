@@ -11,6 +11,25 @@ var outputBuf = [];
 //readFromFile();
 
 var rABS = true; // true: readAsBinaryString ; false: readAsArrayBuffer
+document.getElementById('btn').onclick = function(){
+  var files = document.getElementById('files'), f = files.files[0];
+  modelName = document.forms.id_form1.id_textBox1.value;
+  fileName = escape(f.name);
+  var timeStamp = f.lastModifiedDate.toLocaleDateString();
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var data = e.target.result;
+    if(!rABS) data = new Uint8Array(data);
+    workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'});
+    writeOutbuf("//modelName=" + modelName);
+    writeOutbuf("//fileName=" + fileName);
+    writeOutbuf("//settingFiletimeStamp=" + timeStamp);
+    parseExcelFile();
+    /* DO SOMETHING WITH workbook HERE */
+  };
+  if(rABS) reader.readAsBinaryString(f); else reader.readAsArrayBuffer(f);
+}
+
 function handleDrop(e) {
   e.stopPropagation(); e.preventDefault();
 //  var files = e.dataTransfer.files, f = files[0];
@@ -26,7 +45,7 @@ function handleDrop(e) {
     workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'});
     writeOutbuf("//modelName=" + modelName);
     writeOutbuf("//fileName=" + fileName);
-    writeOutbuf("//timeStamp=" + timeStamp);
+    writeOutbuf("//settingFiletimeStamp=" + timeStamp);
     parseExcelFile();
     /* DO SOMETHING WITH workbook HERE */
   };
@@ -149,7 +168,7 @@ function dumpSwitch(tCol, eRow){
   writeOutbuf("#endif");
   writeOutbuf("// " + modelName + "END");
   showOutputResult();
-  alert("end");
+  alert("作成完了");
 }
 
 function writeOutbuf(outString){

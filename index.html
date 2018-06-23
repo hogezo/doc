@@ -13,18 +13,30 @@
   <head>
     <meta charset="utf-8">
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-    <script type="text/javascript" src="work.js"></script>
-  </head>
   <body>
+  </head>
  　　　　 <p>コンパイルSW変換</p>
-        <input type="file" id="files" name="files[]" multiple />
+        <input type="file" id="files"/>
         <form name="form1" id="id_form1" action="">
           <input name="textBox1" id="id_textBox1" type="text" value="" />
-          <!-- <input type="button" value="Exec" onclick="onButtonClick();" /> -->
         </form>
+        <button id="btn">変換実行</button>
         <output id="list"></output>
-        <script>document.getElementById('files').addEventListener('change', handleDrop, false);</script>
-  </body>
+        <!-- <script>
+        document.getElementById('files').addEventListener('change', handleDrop, false);
+      </script> -->
+
+        <script language="Javascript">
+        function Click_Sub() {
+        	if (document.all.div1.style.display == "none") {
+        		document.all.div1.style.display = "block"
+        	} else {
+        		document.all.div1.style.display = "none"
+        	}
+        }
+        </script>
+        <script type="text/javascript" src="work.js"></script>
+        </body>
 </html>
 </body>
 </html>
